@@ -105,7 +105,7 @@ export function FlashcardDialog({ open, onOpenChange, onSave, card, collections 
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-2xl max-h-[90dvh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>{card ? 'Edit Flashcard' : 'Add New Flashcard'}</DialogTitle>
           <DialogDescription>
@@ -117,7 +117,7 @@ export function FlashcardDialog({ open, onOpenChange, onSave, card, collections 
           {/* Jisho Search */}
           <div className="space-y-2">
             <label className="text-sm font-medium">Quick Search Jisho.org</label>
-            <div className="flex gap-2">
+            <div className="flex flex-col gap-2 sm:flex-row">
               <Input
                 value={searchWord}
                 onChange={(e) => setSearchWord(e.target.value)}
@@ -150,7 +150,7 @@ export function FlashcardDialog({ open, onOpenChange, onSave, card, collections 
                 href={jishoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm text-blue-600 hover:underline flex items-center gap-1"
+                className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
               >
                 View on Jisho.org <ExternalLink className="w-3 h-3" />
               </a>
@@ -158,7 +158,7 @@ export function FlashcardDialog({ open, onOpenChange, onSave, card, collections 
           </div>
 
           {/* Form Fields */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="space-y-2">
               <label className="text-sm font-medium">Kanji / Word</label>
               <Input

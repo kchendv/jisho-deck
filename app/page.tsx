@@ -9,6 +9,7 @@ import { FlashcardDialog } from '@/components/flashcard-dialog';
 import { CollectionDialog } from '@/components/collection-dialog';
 import { BrowseView } from '@/components/browse-view';
 import { CollectionsView } from '@/components/collections-view';
+import { ThemeToggle } from '@/components/theme-toggle';
 import { storage } from '@/lib/storage';
 import { Flashcard, Collection, ViewMode } from '@/lib/types';
 
@@ -142,43 +143,49 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-950 dark:via-blue-950 dark:to-indigo-950">
+    <div className="min-h-dvh bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-950 dark:via-blue-950 dark:to-indigo-950">
       {/* Header */}
       <header className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800 sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center">
-                <span className="text-2xl">📚</span>
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-4">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex min-w-0 items-center gap-2 sm:gap-3">
+              <div className="size-9 sm:size-10 shrink-0 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center">
+                <span className="text-xl sm:text-2xl">📚</span>
               </div>
-              <div>
-                <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+              <div className="min-w-0">
+                <h1 className="truncate text-base sm:text-2xl font-bold text-gray-900 dark:text-white">
                   Japanese Flashcards
                 </h1>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
+                <p className="truncate text-xs sm:text-sm text-gray-500 dark:text-gray-400">
                   {flashcards.length} cards · {collections.length} collections
                 </p>
               </div>
             </div>
 
-            <div className="flex gap-2">
+            {/* Labels collapse to icons on phones so the row never overflows. */}
+            <div className="flex shrink-0 items-center gap-1 sm:gap-2">
+              <ThemeToggle />
               <Button
                 size="sm"
                 variant="outline"
                 onClick={handleExportCSV}
                 disabled={flashcards.length === 0}
+                title="Export CSV"
+                aria-label="Export CSV"
               >
-                <Download className="w-4 h-4 mr-2" />
-                Export CSV
+                <Download />
+                <span className="hidden sm:inline">Export CSV</span>
               </Button>
               <Button
                 size="sm"
                 variant="outline"
                 onClick={handleShuffle}
                 disabled={flashcards.length === 0}
+                title="Shuffle"
+                aria-label="Shuffle"
               >
-                <Shuffle className="w-4 h-4 mr-2" />
-                Shuffle
+                <Shuffle />
+                <span className="hidden sm:inline">Shuffle</span>
               </Button>
             </div>
           </div>
@@ -187,39 +194,41 @@ export default function Home() {
 
       {/* Navigation */}
       <nav className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex gap-1 py-2">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+          {/* Tabs share the width evenly on phones, like a segmented control,
+              and scroll rather than overflow the page on very narrow screens. */}
+          <div className="flex gap-1 py-2 overflow-x-auto no-scrollbar">
             <Button
               variant={viewMode === 'browse' ? 'default' : 'ghost'}
               onClick={() => setViewMode('browse')}
-              className="gap-2"
+              className="flex-1 gap-1.5 text-xs sm:flex-none sm:gap-2 sm:text-sm"
             >
-              <FileText className="w-4 h-4" />
+              <FileText className="size-4" />
               Browse All
             </Button>
             <Button
               variant={viewMode === 'study' ? 'default' : 'ghost'}
               onClick={handleStudyAll}
               disabled={flashcards.length === 0}
-              className="gap-2"
+              className="flex-1 gap-1.5 text-xs sm:flex-none sm:gap-2 sm:text-sm"
             >
-              <BookOpen className="w-4 h-4" />
+              <BookOpen className="size-4" />
               Study Mode
             </Button>
             <Button
               variant={viewMode === 'collections' ? 'default' : 'ghost'}
               onClick={() => setViewMode('collections')}
-              className="gap-2"
+              className="flex-1 gap-1.5 text-xs sm:flex-none sm:gap-2 sm:text-sm"
             >
-              <Library className="w-4 h-4" />
+              <Library className="size-4" />
               Collections
             </Button>
           </div>
         </div>
       </nav>
 
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {/* Main Content — bottom padding keeps content clear of the action buttons */}
+      <main className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8 pb-28">
         <AnimatePresence mode="wait">
           {viewMode === 'study' && studyCards.length > 0 && (
             <motion.div
@@ -274,30 +283,30 @@ export default function Home() {
       </main>
 
       {/* Floating Action Buttons */}
-      <div className="fixed bottom-6 right-6 flex flex-col gap-3">
+      <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-20 flex flex-col gap-3">
         <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
           <Button
-            size="lg"
             onClick={() => {
               setEditingCollection(undefined);
               setShowCollectionDialog(true);
             }}
-            className="rounded-full w-14 h-14 shadow-lg"
+            className="rounded-full size-12 sm:size-14 shadow-lg"
             variant="outline"
+            aria-label="New collection"
           >
-            <Library className="w-6 h-6" />
+            <Library className="size-5 sm:size-6" />
           </Button>
         </motion.div>
         <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
           <Button
-            size="lg"
             onClick={() => {
               setEditingCard(undefined);
               setShowFlashcardDialog(true);
             }}
-            className="rounded-full w-14 h-14 shadow-lg bg-gradient-to-br from-blue-500 to-indigo-600"
+            className="rounded-full size-12 sm:size-14 shadow-lg bg-gradient-to-br from-blue-500 to-indigo-600"
+            aria-label="New flashcard"
           >
-            <Plus className="w-6 h-6" />
+            <Plus className="size-5 sm:size-6" />
           </Button>
         </motion.div>
       </div>

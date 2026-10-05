@@ -29,7 +29,7 @@ export function CollectionsView({
   return (
     <div className="w-full max-w-4xl mx-auto">
       {collections.length === 0 ? (
-        <div className="text-center py-12 text-gray-500">
+        <div className="text-center py-12 text-gray-500 dark:text-gray-400">
           <p>No collections yet. Create one to organize your flashcards!</p>
         </div>
       ) : (
@@ -45,21 +45,21 @@ export function CollectionsView({
                 transition={{ delay: index * 0.05 }}
               >
                 <Card 
-                  className="p-5 hover:shadow-lg transition-all cursor-pointer"
+                  className="p-4 sm:p-5 hover:shadow-lg transition-all cursor-pointer"
                   style={{ borderTopColor: collection.color, borderTopWidth: '4px' }}
                 >
-                  <div className="flex justify-between items-start mb-3">
-                    <div className="flex-1">
-                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                  <div className="flex justify-between items-start gap-2 mb-3">
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-lg sm:text-xl font-bold break-words text-gray-900 dark:text-white mb-1">
                         {collection.name}
                       </h3>
                       {collection.description && (
-                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                        <p className="text-sm break-words text-gray-600 dark:text-gray-400 mb-2">
                           {collection.description}
                         </p>
                       )}
                     </div>
-                    <div className="flex gap-1">
+                    <div className="flex shrink-0 gap-1">
                       <Button
                         size="icon"
                         variant="ghost"

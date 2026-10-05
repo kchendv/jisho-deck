@@ -26,7 +26,7 @@ export function BrowseView({ flashcards, collections, onEdit, onDelete }: Browse
   return (
     <div className="w-full max-w-4xl mx-auto">
       {flashcards.length === 0 ? (
-        <div className="text-center py-12 text-gray-500">
+        <div className="text-center py-12 text-gray-500 dark:text-gray-400">
           <p>No flashcards yet. Add your first one to get started!</p>
         </div>
       ) : (
@@ -39,18 +39,18 @@ export function BrowseView({ flashcards, collections, onEdit, onDelete }: Browse
               transition={{ delay: index * 0.05 }}
             >
               <Card className="p-4 hover:shadow-lg transition-shadow">
-                <div className="flex justify-between items-start mb-3">
-                  <div className="flex-1">
-                    <div className="text-3xl font-bold text-gray-900 dark:text-white mb-1">
+                <div className="flex justify-between items-start gap-2 mb-3">
+                  <div className="flex-1 min-w-0">
+                    <div className="text-2xl sm:text-3xl font-bold break-words text-gray-900 dark:text-white mb-1">
                       {card.kanji}
                     </div>
                     {(card.hiragana || card.katakana) && (
-                      <div className="text-lg text-gray-600 dark:text-gray-400">
+                      <div className="text-base sm:text-lg break-words text-gray-600 dark:text-gray-400">
                         {card.hiragana} {card.katakana}
                       </div>
                     )}
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex shrink-0 gap-1">
                     <Button
                       size="icon"
                       variant="ghost"
@@ -72,7 +72,7 @@ export function BrowseView({ flashcards, collections, onEdit, onDelete }: Browse
                   </div>
                 </div>
 
-                <p className="text-gray-700 dark:text-gray-300 mb-3">
+                <p className="text-gray-700 dark:text-gray-300 break-words mb-3">
                   {card.definition}
                 </p>
 
@@ -98,7 +98,7 @@ export function BrowseView({ flashcards, collections, onEdit, onDelete }: Browse
                     href={`https://jisho.org/search/${encodeURIComponent(card.kanji)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="ml-auto text-xs text-blue-600 hover:underline flex items-center gap-1"
+                    className="ml-auto text-xs text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
                   >
                     Jisho <ExternalLink className="w-3 h-3" />
                   </a>

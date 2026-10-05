@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Collection } from '@/lib/types';
+import { cn } from '@/lib/utils';
 
 interface CollectionDialogProps {
   open: boolean;
@@ -56,7 +57,7 @@ export function CollectionDialog({ open, onOpenChange, onSave, collection }: Col
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md">
+      <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>{collection ? 'Edit Collection' : 'Create Collection'}</DialogTitle>
           <DialogDescription>
@@ -87,18 +88,20 @@ export function CollectionDialog({ open, onOpenChange, onSave, collection }: Col
 
           <div className="space-y-2">
             <label className="text-sm font-medium">Color</label>
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
               {PRESET_COLORS.map((color) => (
                 <button
                   key={color}
                   type="button"
                   onClick={() => setFormData({ ...formData, color })}
-                  className="w-10 h-10 rounded-full border-2 transition-all"
-                  style={{
-                    backgroundColor: color,
-                    borderColor: formData.color === color ? '#000' : 'transparent',
-                    transform: formData.color === color ? 'scale(1.1)' : 'scale(1)',
-                  }}
+                  aria-label={`Use color ${color}`}
+                  aria-pressed={formData.color === color}
+                  className={cn(
+                    'size-10 sm:size-9 rounded-full transition-transform',
+                    formData.color === color &&
+                      'scale-110 ring-2 ring-foreground ring-offset-2 ring-offset-background'
+                  )}
+                  style={{ backgroundColor: color }}
                 />
               ))}
             </div>
